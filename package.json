@@ -1,0 +1,16 @@
+{
+  "name": "pi-contribution-evidence-model",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Reference model for a contribution evidence layer, with executable invariants. Offline, zero-dependency, holds no personal data.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node test/run.mjs",
+    "model": "node evidence.mjs --model",
+    "examples": "node evidence.mjs --examples",
+    "boundaries": "node evidence.mjs --boundaries"
+  },
+  "files": ["README.md", "llms.txt", "evidence.mjs", "lib.mjs", "docs", "test", "LICENSE"]
+}

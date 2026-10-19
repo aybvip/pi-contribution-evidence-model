@@ -1,0 +1,71 @@
+# pi-contribution-evidence-model
+
+> A reference *model* for assembling a contribution evidence profile from multiple sources — with
+> the invariants that stop it from overclaiming. **Holds no data, makes no network calls, produces
+> no combined score.**
+
+## One-line answers
+
+- Does this build a "Pioneer contribution profile"? It defines **how one could be modelled**; it does
+  not build a service, and holds no personal data.
+- Can a profile span several Pi apps? **No.** Pi's `uid` is app-specific; docs state "two apps cannot
+  correlate the same person."
+- Can a Pi user be linked to a GitHub account as *verified*? **No.** Any such link is at most
+  `self-declared`.
+- Is there a single contribution score? **No.** Four independent axes (A technical, B utility,
+  C in-app activity, D evidence strength) are reported separately.
+- Is in-app activity the same as contribution? **No.** Activity is axis C; contribution is axis A.
+- Can KYC identity be read by a developer? **No.** There is no developer scope for it.
+- What does the code actually do? Prints the model, the boundaries, and runs an invariant test suite.
+  It never touches the network and holds no data.
+
+## The model
+
+- Trust levels (strongest first): `on-chain` › `platform-verified` › `self-declared` › `unverified`.
+- Every evidence item must carry: source, trust, verifiedBy, provenance, observedAt, uniqueKey.
+- Cross-source account links are **at most `self-declared`** (invariant I2).
+- Four axes, never combined into one number (invariant I1).
+
+## Invariants
+
+I1 no combined score · I2 links are self-declared at most · I3 six mandatory evidence fields ·
+I4 a claim never exceeds its source's trust · I5 activity ≠ contribution · I6 no personal data/KYC/
+secrets · I7 no cross-app correlation.
+
+## Commands (offline, zero-dependency)
+
+```
+node evidence.mjs --model        # sources, trust levels, axes, Pi capabilities, invariants
+node evidence.mjs --examples     # synthetic, non-personal worked examples
+node evidence.mjs --boundaries   # what the model refuses to do
+node test/run.mjs                # invariant suite
+```
+
+## Boundaries
+
+Does not name "real contributors". Does not verify a GitHub↔Pi link. Does not read or infer KYC.
+Does not combine axes into a ranking. Does not correlate across apps. Has no authority over money.
+
+## Sources (official)
+
+- Pi Sign-in: https://github.com/pi-apps/pi-platform-docs/blob/master/pi-sign-in.md
+- Platform API: https://docs.minepi.com/api-reference/PlatformAPI
+- SDK reference: https://docs.minepi.com/api-reference/SdkReference
+
+## Pages
+
+- Model: https://github.com/aybvip/pi-contribution-evidence-model/blob/main/docs/MODEL.md
+- Linkage: https://github.com/aybvip/pi-contribution-evidence-model/blob/main/docs/LINKAGE.md
+- Threat model: https://github.com/aybvip/pi-contribution-evidence-model/blob/main/docs/THREAT-MODEL.md
+- Ethics: https://github.com/aybvip/pi-contribution-evidence-model/blob/main/docs/ETHICS.md
+- Review of the proposal: https://github.com/aybvip/pi-contribution-evidence-model/blob/main/docs/REVIEW-OF-PROPOSAL.md
+- Sources: https://github.com/aybvip/pi-contribution-evidence-model/blob/main/docs/SOURCES.md
+
+## Related
+
+- pi-user-behavior: https://github.com/aybvip/pi-user-behavior
+
+## Scope
+
+Read-only, offline, unofficial. Not affiliated with Pi Network. No claim about price, identity,
+intent, rewards, or any person's actual contributions.
